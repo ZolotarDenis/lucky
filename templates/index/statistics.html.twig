@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistics{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+{% if errorMessage is defined %}
+    <div class="example-wrapper" style="color: darkred">
+        <h3>{{ errorMessage }}</h3>
+    </div>
+{% else %}
+    <div class="example-wrapper">
+        <h1>Total number of active guests: {{ response.count }}! ✅</h1>
+    </div>
+{% endif %}
+
+{% endblock %}
