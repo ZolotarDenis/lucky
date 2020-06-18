@@ -40,11 +40,6 @@ class GuestLogoutCommand extends Command
         parent::__construct();
     }
 
-    protected function configure(): void
-    {
-        $this->setDescription('Add a short description for your command');
-    }
-
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -53,9 +48,8 @@ class GuestLogoutCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var GuestRepository $guestRepository */
-        $guestRepository =$this->entityManager->getRepository(Guest::class);
+        $guestRepository = $this->entityManager->getRepository(Guest::class);
         $guests = $guestRepository->getGuestsForLogoutProcess();
-
         $statusRepository = $this->entityManager->getRepository(Status::class);
         /** @var Status $statusWentOut */
         $statusWentOut = $statusRepository->findOneBy(['name' => Status::WENT_OUT_STATUS]);

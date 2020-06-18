@@ -40,7 +40,7 @@ class IndexController extends AbstractController
         $response = null;
         $wentInDateTime = null;
         $wentOutDateTime = null;
-        $isValidDates = (bool) strtotime($dateWentIn) && (bool) strtotime($dateWentOut);
+        $isValidDates = (bool)strtotime($dateWentIn) && (bool)strtotime($dateWentOut);
         if ($isValidDates) {
             $wentInDateTime = new \DateTime($dateWentIn);
             $wentOutDateTime = new \DateTime($dateWentOut);
@@ -51,7 +51,7 @@ class IndexController extends AbstractController
         }
 
         $interval = $wentInDateTime->diff($wentOutDateTime);
-        if ((int) $interval->format('%a') > 0) {
+        if ((int)$interval->format('%a') > 0) {
             return $this->render('index/statistics.html.twig', [
                 'errorMessage' => 'Dates interval more when 1 day'
             ]);

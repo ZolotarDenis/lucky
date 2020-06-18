@@ -52,16 +52,18 @@ class GuestService
         }
 
         $guestCacheItem = $this->cache->getItem($clientIp);
-        $guestCacheItem->expiresAfter(new \DateInterval('PT10M'));
-        $this->cache->save($guestCacheItem);
+        if (!$guestCacheItem->isHit()) {
+            /** @var Status $statusWaitIn */
+            $statusWaitIn = $this->entityManager->getRepository(Status::class)
+                ->findOneBy(['name' => Status::WENT_IN_STATUS]);
 
-        /** @var Status $statusWaitIn */
-        $statusWaitIn = $this->entityManager->getRepository(Status::class)
-            ->findOneBy(['name' => Status::WENT_IN_STATUS]);
+            $guestEntity = new Guest($statusWaitIn, $clientIp);
+            $this->entityManager->persist($guestEntity);
+            $this->entityManager->flush();
 
-        $guestEntity = new Guest($statusWaitIn, $clientIp);
-        $this->entityManager->persist($guestEntity);
-        $this->entityManager->flush();
+            $guestCacheItem->expiresAfter(new \DateInterval('PT10M'));
+            $this->cache->save($guestCacheItem);
+        }
     }
 
     /**

@@ -16,8 +16,11 @@ class GuestRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('guest');
         $qb
+            ->innerJoin('guest.status', 'status')
             ->where('guest.created > :date')
-            ->setParameter('date', new \DateTime('-10 minute'));
+            ->setParameter('date', new \DateTime('-11 minute'))
+            ->andWhere('status.name = :statusName')
+            ->setParameter('statusName', Status::WENT_IN_STATUS);
 
         return $qb->getQuery()->getResult();
     }

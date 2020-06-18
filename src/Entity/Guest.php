@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 use DateTime;
 
 /**
- * @ORM\Table(name="guest")
+ * @ORM\Table(name="guest",indexes={@Index(name="created_idx", columns={"created"})})
  * @ORM\Entity(repositoryClass="App\Repository\GuestRepository")
  */
 class Guest
