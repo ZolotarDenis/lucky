@@ -60,11 +60,11 @@ class GuestLogoutCommand extends Command
             if (!$guestCacheItem->isHit()) {
                 $guest = new Guest($statusWentOut, $clientIp);
                 $this->entityManager->persist($guest);
-                $this->entityManager->flush();
-
                 $output->write('Logout guest with IP:' . $clientIp);
             }
         }
+
+        $this->entityManager->flush();
 
         return Command::SUCCESS;
     }
